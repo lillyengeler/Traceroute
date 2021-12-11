@@ -163,7 +163,7 @@ def get_route(hostname):
                     print("rtt = ", rtt)
                     tracelist1.extend([ttl, rtt, "ms", addr[0], hostname[0]])
                     print("about to print tracelist1")
-                    print(*tracelist1)
+                    print(tracelist1)
                     print("done printing tracelist1")
 
                     tracelist2.append(tracelist1)
