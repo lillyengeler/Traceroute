@@ -46,10 +46,8 @@ def build_packet():
     # Make the header in a similar way to the ping exercise.
     myID = os.getpid() & 0xFFFF  # Return the current process id
     myChecksum = 0
-    outHopCount = 0
-    returnHopCount = 0
-    header = struct.pack("d", ICMP_ECHO_REQUEST, 0, myChecksum, myID, outHopCount, returnHopCount)
-    data = struct.pack("d", time.time())
+    header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, myID, 1)
+    data = struct.pack("bbHHh", time.time())
 
     # Append checksum to the header.
     myChecksum = checksum(header + data)
@@ -59,8 +57,8 @@ def build_packet():
     else:
         myChecksum = htons(myChecksum)
 
-    # types, code, checksum, hostIP, outboundHopCount, returnHopCount
-    header = struct.pack("d", ICMP_ECHO_REQUEST, 0, myChecksum, myID, outHopCount, returnHopCount)
+    # type, code, checksum, ID, seq number
+    header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, myID, 1)
     # Don’t send the packet yet , just return the final packet in this function.
 
     #Fill in end
@@ -118,11 +116,13 @@ def get_route(hostname):
                 #Fill in start
                 #Fetch the icmp type from the IP packet
                 icmpHeader = recvPacket[20:28]
-                types, code, checksum, hostIP, outboundHopCount, returnHopCount = struct.unpack("d", icmpHeader)  # unpacking the received header
+                types, code, checksum, hostID, sequence = struct.unpack("d", icmpHeader)  # unpacking the received header
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
                     hostname = hostname
+                    print("printing hostname: ")
+                    print(hostname)
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
                     #Fill in start
@@ -135,12 +135,7 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here
-                    rtt = (timeReceived - timeSent)
-                    tracelist1.append(returnHopCount)
-                    tracelist1.append(rtt)
-                    tracelist1.append(hostIP)
-                    tracelist1.append(addr[0])
-                    tracelist1.append(tracelist2)
+
                     #Fill in end
                 elif types == 3:
                     # type 3 = datagram arrives at dest and contains unlikely port #, so destination host sends a
@@ -150,11 +145,8 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here
-                    tracelist1.append(returnHopCount)
-                    tracelist1.append(rtt)
-                    tracelist1.append(hostIP)
-                    tracelist1.append(addr[0])
-                    tracelist1.append(tracelist2)
+
+                    tracelist2.append(tracelist1)
                     #Fill in end
                 elif types == 0:
                     # type 0 = final destination received ICMP Echo Request = Echo Reply
@@ -162,11 +154,8 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here and return your list if your destination IP is met
-                    tracelist1.append(returnHopCount)
-                    tracelist1.append(rtt)
-                    tracelist1.append(hostIP)
-                    tracelist1.append(addr[0])
-                    tracelist1.append(tracelist2)
+
+                    tracelist2.append(tracelist1)
                     #Fill in end
                 else:
                     #Fill in start
