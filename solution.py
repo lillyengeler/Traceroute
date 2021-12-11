@@ -153,6 +153,7 @@ def get_route(hostname):
 
                 if types == 11:
                     print("in type 11 if statement")
+                    print("ttl: ", ttl)
                     # type 11 = TTL field is 0 - router sends warning msg to source containing name of router and IP address
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
