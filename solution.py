@@ -217,9 +217,9 @@ def get_route(hostname):
 
             finally:
                 print("ttl: ", ttl)
-                ttl += 1
-                print("ttl: ", ttl)
                 print("in socket close")
                 mySocket.close()
+                ttl += 1
+                print("ttl: ", ttl)
 
 #get_route("google.com")
