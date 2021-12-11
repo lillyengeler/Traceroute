@@ -10,7 +10,7 @@ import binascii
 ICMP_ECHO_REQUEST = 8
 MAX_HOPS = 30
 TIMEOUT = 2.0
-TRIES = 3
+TRIES = 1
 
 
 # The packet that we shall send to each router along the path is the ICMP echo
@@ -106,6 +106,7 @@ def get_route(hostname):
                 howLongInSelect = (time.time() - startedSelect)
                 if whatReady[0] == []:  # Timeout
                     print("* * * Request timed out.")
+                    tracelist1.append(str(ttl))
                     tracelist1.append("* * * Request timed out.")
                     # Fill in start
                     # You should add the list above to your all traces list
@@ -118,6 +119,7 @@ def get_route(hostname):
                 timeLeft = timeLeft - howLongInSelect
                 if timeLeft <= 0:
                     print("* * * Request timed out.")
+                    tracelist1.append(str(ttl))
                     tracelist1.append("* * * Request timed out.")
                     # Fill in start
                     # You should add the list above to your all traces list
@@ -216,10 +218,13 @@ def get_route(hostname):
                     print("in else statement")
                     # Fill in start
                     # If there is an exception/error to your if statements, you should append that to your list here
+                    tracelist1.append(str(ttl))
                     tracelist1.append("*")
                     tracelist2.append(tracelist1)
                     # Fill in end
                 print("returning tracelist 2")
+
+                tracelist1.clear()
                 return tracelist2
 
             finally:
