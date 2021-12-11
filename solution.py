@@ -161,7 +161,7 @@ def get_route(hostname):
                     # Fill in start
                     preRtt = (timeReceived - startedSelect)
                     print("pre rtt = ", preRtt)
-                    midRtt = str(round(preRtt, 2))
+                    midRtt = str(round(preRtt, 0))
                     print("mid rtt = ", midRtt)
                     rtt = str(midRtt) + "ms"
                     print("rtt = ", rtt)
