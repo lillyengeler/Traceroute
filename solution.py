@@ -74,6 +74,7 @@ def build_packet():
 
 
 def get_route(hostname):
+    print("in get_route")
 
     timeLeft = TIMEOUT
     tracelist1 = []  # This is your list to use when iterating through each trace
@@ -81,6 +82,7 @@ def get_route(hostname):
 
     for ttl in range(1, MAX_HOPS):
         for tries in range(TRIES):
+            print("we're in the nested for loop")
             destAddr = gethostbyname(hostname)
 
             # Fill in start
@@ -92,7 +94,9 @@ def get_route(hostname):
             mySocket.setsockopt(IPPROTO_IP, IP_TTL, struct.pack('I', ttl))
             mySocket.settimeout(TIMEOUT)
             try:
+                print("about to build packet")
                 d = build_packet()
+                print("done building packet")
                 mySocket.sendto(d, (destAddr, 0))
                 t = time.time()
                 startedSelect = time.time()
