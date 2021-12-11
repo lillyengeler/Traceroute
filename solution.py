@@ -96,7 +96,7 @@ def get_route(hostname):
             mySocket.setsockopt(IPPROTO_IP, IP_TTL, struct.pack('I', ttl))
             mySocket.settimeout(TIMEOUT)
             try:
-                p
+
                 d = build_packet()
 
 
