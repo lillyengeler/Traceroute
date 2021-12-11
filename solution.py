@@ -84,6 +84,8 @@ def get_route(hostname):
         for tries in range(TRIES):
             tracelist1 = []  # This is your list to use when iterating through each trace
             destAddr = gethostbyname(hostname)
+            print("hostname: ", hostname)
+            print("dest addy: ", destAddr)
 
             # Fill in start
             # Make a raw socket named mySocket
@@ -96,8 +98,8 @@ def get_route(hostname):
             mySocket.settimeout(TIMEOUT)
             try:
                 d = build_packet()
-                mySocket.sendto(d, (hostname, 0))
-                print("just sent socket to dest: ", hostname)
+                mySocket.sendto(d, (destAddr, 0))
+                print("just sent socket to dest: ", destAddr)
                 print("ttl is: ", ttl)
                 t = time.time()
                 startedSelect = time.time()
@@ -113,7 +115,7 @@ def get_route(hostname):
                     tracelist1.clear()  # clear out list for next packet
                     # Fill in end
                 recvPacket, addr = mySocket.recvfrom(1024)
-                print("rec packet addy: ", addr[0])
+                print("rec packet addy: ", addr)
                 timeReceived = time.time()
                 timeLeft = timeLeft - howLongInSelect
                 if timeLeft <= 0:
@@ -140,7 +142,7 @@ def get_route(hostname):
                 try:  # try to fetch the hostname
                     # Fill in start
                     # converting host ID from header to hostname
-                    hostname = gethostbyaddr(addr[0])[0]
+                    hostname = gethostbyaddr(addr[0])
                     print("hostname is: ")
                     print(hostname)
                     # Fill in end
