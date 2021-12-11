@@ -162,7 +162,7 @@ def get_route(hostname):
                     preRtt = (timeReceived - startedSelect)
                     rtt = str(preRtt) + "ms"
                     print("rtt = ", rtt)
-                    tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname[0])])
+                    tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname)])
                     print("about to print tracelist1")
                     print(tracelist1)
                     print("done printing tracelist1")
@@ -185,7 +185,7 @@ def get_route(hostname):
                     preRtt = (timeReceived - startedSelect)
                     rtt = str(preRtt) + "ms"
                     print("rtt = ", rtt)
-                    tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname[0])])
+                    tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname)])
                     print("gonna print tracelist2")
                     tracelist2.append(tracelist1)
                     print(tracelist2)
@@ -202,7 +202,7 @@ def get_route(hostname):
                     preRtt = (timeReceived - startedSelect)
                     rtt = str(preRtt) + "ms"
                     print("rtt = ", rtt)
-                    tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname[0])])
+                    tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname)])
                     print("about to print tracelist1")
                     print(tracelist1)
                     print("done printing tracelist1")
@@ -221,8 +221,11 @@ def get_route(hostname):
                     tracelist1.append("*")
                     tracelist2.append(tracelist1)
                     # Fill in end
+                print("returning tracelist 2")
                 return tracelist2
+
             finally:
+                print("in socket close")
                 mySocket.close()
 
 #get_route("google.com")
