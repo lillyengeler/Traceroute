@@ -90,8 +90,9 @@ def get_route(hostname):
             icmp = getprotobyname("icmp")
             mySocket = socket(AF_INET, SOCK_RAW, icmp)
             # Fill in end
-
+            print("ttl is: ", ttl)
             mySocket.setsockopt(IPPROTO_IP, IP_TTL, struct.pack('I', ttl))
+            print("ttl is: ", ttl)
             mySocket.settimeout(TIMEOUT)
             try:
                 d = build_packet()
