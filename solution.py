@@ -115,7 +115,7 @@ def get_route(hostname):
                     tracelist1.clear()  # clear out list for next packet
                     # Fill in end
                 recvPacket, addr = mySocket.recvfrom(1024)
-                print("rec packet addy: ", addr)
+                print("rec packet addy: ", addr[0])
                 timeReceived = time.time()
                 timeLeft = timeLeft - howLongInSelect
                 if timeLeft <= 0:
@@ -142,7 +142,7 @@ def get_route(hostname):
                 try:  # try to fetch the hostname
                     # Fill in start
                     # converting host ID from header to hostname
-                    hostname = gethostbyaddr(addr[0])
+                    hostname = gethostbyaddr(addr[0])[0]
                     print("hostname is: ")
                     print(hostname)
                     # Fill in end
