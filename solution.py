@@ -210,7 +210,7 @@ def get_route(hostname):
                     tracelist2.append(tracelist1)
                     print(tracelist2)
                     print("done printing list 2")
-                    if (addr[0] == destAddr):
+                    if addr[0] == destAddr:
                         return tracelist2
 
                     # Fill in end
@@ -225,10 +225,11 @@ def get_route(hostname):
                 print("returning tracelist 2")
 
                 tracelist1.clear()   # IS THIS NEEDED?
-    return tracelist2
+                ttl += 1
+                return tracelist2
 
-#finally:
-    #print("in socket close")
-    mySocket.close()
+            finally:
+                print("in socket close")
+                mySocket.close()
 
 #get_route("google.com")
