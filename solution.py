@@ -47,10 +47,10 @@ def build_packet():
     # packet to be sent was made, secondly the checksum was appended to the header and
     # then finally the complete packet was sent to the destination.
 
-    print("in build packet")
+
     # Make the header in a similar way to the ping exercise.
     myID = os.getpid() & 0xFFFF  # Return the current process id
-    print("process id: ", myID)
+
     myChecksum = 0
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, myID, 1)
     data = struct.pack("d", time.time())
@@ -64,14 +64,14 @@ def build_packet():
 
     # type, code, checksum, ID, seq number
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, myID, 1)
-    print("process id: ", myID)
+
     # Don’t send the packet yet , just return the final packet in this function.
     # Fill in end
 
     # So the function ending should look like this
 
     packet = header + data
-    print("about to return packet")
+
     return packet
 
 
@@ -96,10 +96,10 @@ def get_route(hostname):
             mySocket.setsockopt(IPPROTO_IP, IP_TTL, struct.pack('I', ttl))
             mySocket.settimeout(TIMEOUT)
             try:
-                print("about to build packet")
+                p
                 d = build_packet()
-                print("done building packet")
-                print("about to send socket to dest")
+
+
                 mySocket.sendto(d, (destAddr, 0))
                 print("just sent socket to dest: ", destAddr)
                 t = time.time()
@@ -134,14 +134,14 @@ def get_route(hostname):
                 # Fill in start
                 # Fetch the icmp type from the IP packet
                 icmpHeader = recvPacket[20:28]
-                print("about to unpack struct")
+
                 types, code, checksum, hostID, sequence = struct.unpack("bbHHh", icmpHeader)  # unpacking the received header
-                print("just unpacked struct")
+
                 # Fill in end
                 try:  # try to fetch the hostname
                     # Fill in start
                     # converting host ID from header to hostname
-                    print("types, code, checksum, hostID, seq: ")
+
                     print(types, ", ", code, ", ", checksum, ", ", hostID, ", ", sequence)
                     print("fetching hostname")
                     hostname = gethostbyaddr(addr[0])
@@ -154,17 +154,24 @@ def get_route(hostname):
                     # Fill in end
 
                 if types == 11:
+                    print("in type 11 if statement")
                     # type 11 = TTL field is 0 - router sends warning msg to source containing name of router and IP address
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     # Fill in start
                     rtt = (timeReceived-timeSent)
+                    print("rtt = ", rtt)
                     tracelist1.extend([ttl, rtt, addr[0], hostname])
+                    print("about to print tl1")
+                    for x in range(len(tracelist1)):
+                        print (tracelist1[x])
+
                     tracelist2.append(tracelist1)
                     # You should add your responses to your lists here
 
                     # Fill in end
                 elif types == 3:
+                    print("in type 3 if statement")
                     # type 3 = datagram arrives at dest and contains unlikely port #, so destination host sends a
                     # port unreachable ICMP message to the source
                     # source host now knows not to send any additional probe packets    `   ¸
@@ -178,6 +185,7 @@ def get_route(hostname):
 
                     # Fill in end
                 elif types == 0:
+                    print("in type 0 if statement")
                     # type 0 = final destination received ICMP Echo Request = Echo Reply
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
@@ -191,6 +199,7 @@ def get_route(hostname):
 
                     # Fill in end
                 else:
+                    print("in else statement")
                     # Fill in start
                     # If there is an exception/error to your if statements, you should append that to your list here
                     tracelist1.append("*")
