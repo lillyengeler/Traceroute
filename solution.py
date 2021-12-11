@@ -144,7 +144,7 @@ def get_route(hostname):
                     print("types, code, checksum, hostID, seq: ")
                     print(types, ", ", code, ", ", checksum, ", ", hostID, ", ", sequence)
                     print("fetching hostname")
-                    hostname = gethostbyaddr(addr)
+                    hostname = gethostbyaddr(addr[0])
                     print("hostname is: ")
                     print(addr)
                     # Fill in end
