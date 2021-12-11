@@ -144,7 +144,7 @@ def get_route(hostname):
 
                     print(types, ", ", code, ", ", checksum, ", ", hostID, ", ", sequence)
                     print("fetching hostname")
-                    hostname = gethostbyaddr(addr[0])
+                    hostname = gethostbyaddr(addr[0])[0]
                     print("hostname is: ")
                     print(hostname[0])
                     # Fill in end
@@ -186,13 +186,10 @@ def get_route(hostname):
                     rtt = str(preRtt) + "ms"
                     print("rtt = ", rtt)
                     tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname[0])])
-                    print("about to print tracelist1")
-                    print(tracelist1)
-                    print("done printing tracelist1")
                     print("gonna print tracelist2")
                     tracelist2.append(tracelist1)
                     print(tracelist2)
-                    print("done printing list 2")
+
 
                     # Fill in end
                 elif types == 0:
