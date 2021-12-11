@@ -50,6 +50,7 @@ def build_packet():
     print("in build packet")
     # Make the header in a similar way to the ping exercise.
     myID = os.getpid() & 0xFFFF  # Return the current process id
+    print("process id: ", myID)
     myChecksum = 0
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, myID, 1)
     data = struct.pack("d", time.time())
@@ -63,8 +64,8 @@ def build_packet():
 
     # type, code, checksum, ID, seq number
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, myID, 1)
+    print("process id: ", myID)
     # Don’t send the packet yet , just return the final packet in this function.
-    print("now we need to return packet!")
     # Fill in end
 
     # So the function ending should look like this
@@ -100,7 +101,7 @@ def get_route(hostname):
                 print("done building packet")
                 print("about to send socket to dest")
                 mySocket.sendto(d, (destAddr, 0))
-                print("just sent socket to dest")
+                print("just sent socket to dest: ", destAddr)
                 t = time.time()
                 startedSelect = time.time()
                 whatReady = select.select([mySocket], [], [], timeLeft)
@@ -114,6 +115,7 @@ def get_route(hostname):
                     tracelist1.clear()  # clear out list for next packet
                     # Fill in end
                 recvPacket, addr = mySocket.recvfrom(1024)
+                print("rec packet addy: ", addr)
                 timeReceived = time.time()
                 timeLeft = timeLeft - howLongInSelect
                 if timeLeft <= 0:
