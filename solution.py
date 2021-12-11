@@ -90,9 +90,9 @@ def get_route(hostname):
             icmp = getprotobyname("icmp")
             mySocket = socket(AF_INET, SOCK_RAW, icmp)
             # Fill in end
-            print("ttl is: ", ttl)
+
             mySocket.setsockopt(IPPROTO_IP, IP_TTL, struct.pack('I', ttl))
-            print("ttl is: ", ttl)
+
             mySocket.settimeout(TIMEOUT)
             try:
                 d = build_packet()
@@ -134,14 +134,14 @@ def get_route(hostname):
                 # Fetch the icmp type from the IP packet
                 icmpHeader = recvPacket[20:28]
 
-                types, code, checksum, hostID, sequence = struct.unpack("bbHHh", icmpHeader)  # unpacking the received header
+                type, code, checksum, hostID, sequence = struct.unpack("bbHHh", icmpHeader)  # unpacking the received header
 
                 # Fill in end
                 try:  # try to fetch the hostname
                     # Fill in start
                     # converting host ID from header to hostname
 
-                    print(types, ", ", code, ", ", checksum, ", ", hostID, ", ", sequence)
+                    print(type, ", ", code, ", ", checksum, ", ", hostID, ", ", sequence)
                     print("fetching hostname")
                     hostname = gethostbyaddr(addr[0])[0]
                     print("hostname is: ")
@@ -152,7 +152,7 @@ def get_route(hostname):
                     hostname = "hostname not returnable"
                     # Fill in end
 
-                if types == 11:
+                if type == 11:
                     print("in type 11 if statement")
                     print("ttl: ", ttl)
                     # type 11 = TTL field is 0 - router sends warning msg to source containing name of router and IP address
@@ -168,7 +168,7 @@ def get_route(hostname):
                     # You should add your responses to your lists here
 
                     # Fill in end
-                elif types == 3:
+                elif type == 3:
                     print("in type 3 if statement")
                     # type 3 = datagram arrives at dest and contains unlikely port #, so destination host sends a
                     # port unreachable ICMP message to the source
@@ -185,7 +185,7 @@ def get_route(hostname):
 
 
                     # Fill in end
-                elif types == 0:
+                elif type == 0:
                     print("in type 0 if statement")
                     # type 0 = final destination received ICMP Echo Request = Echo Reply
                     bytes = struct.calcsize("d")
@@ -216,6 +216,8 @@ def get_route(hostname):
                 return tracelist2
 
             finally:
+                print("ttl: ", ttl)
+                ttl += 1
                 print("ttl: ", ttl)
                 print("in socket close")
                 mySocket.close()
