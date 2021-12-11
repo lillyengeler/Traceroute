@@ -51,11 +51,8 @@ def build_packet():
     # Make the header in a similar way to the ping exercise.
     myID = os.getpid() & 0xFFFF  # Return the current process id
     myChecksum = 0
-    print("about to struct.pack")
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, myID, 1)
-    print("just made the header")
     data = struct.pack("d", time.time())
-    print("just added the data")
     # Append checksum to the header.
     myChecksum = checksum(header + data)
     if sys.platform == 'darwin':
@@ -63,7 +60,7 @@ def build_packet():
         myChecksum = htons(myChecksum) & 0xffff
     else:
         myChecksum = htons(myChecksum)
-    print("about to struct.pack the header with right checksum")
+
     # type, code, checksum, ID, seq number
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, myID, 1)
     # Don’t send the packet yet , just return the final packet in this function.
@@ -73,6 +70,7 @@ def build_packet():
     # So the function ending should look like this
 
     packet = header + data
+    print("about to return packet")
     return packet
 
 
@@ -100,12 +98,15 @@ def get_route(hostname):
                 print("about to build packet")
                 d = build_packet()
                 print("done building packet")
+                print("about to send socket to dest")
                 mySocket.sendto(d, (destAddr, 0))
+                print("just sent socket to dest")
                 t = time.time()
                 startedSelect = time.time()
                 whatReady = select.select([mySocket], [], [], timeLeft)
                 howLongInSelect = (time.time() - startedSelect)
                 if whatReady[0] == []:  # Timeout
+                    print("* * * Request timed out.")
                     tracelist1.append("* * * Request timed out.")
                     # Fill in start
                     # You should add the list above to your all traces list
@@ -116,6 +117,7 @@ def get_route(hostname):
                 timeReceived = time.time()
                 timeLeft = timeLeft - howLongInSelect
                 if timeLeft <= 0:
+                    print("* * * Request timed out.")
                     tracelist1.append("* * * Request timed out.")
                     # Fill in start
                     # You should add the list above to your all traces list
@@ -123,18 +125,24 @@ def get_route(hostname):
                     tracelist1.clear()  # clear out list for next packet
                     # Fill in end
             except timeout:
+                print("about to continue to else statement")
                 continue
 
             else:
                 # Fill in start
                 # Fetch the icmp type from the IP packet
                 icmpHeader = recvPacket[20:28]
-                types, code, checksum, hostID, sequence = struct.unpack("d", icmpHeader)  # unpacking the received header
+                print("about to unpack struct")
+                types, code, checksum, hostID, sequence = struct.unpack("bbHHh", icmpHeader)  # unpacking the received header
+                print("just unpacked struct")
                 # Fill in end
                 try:  # try to fetch the hostname
                     # Fill in start
                     # converting host ID from header to hostname
+                    print("fetching hostname")
                     hostname = socket.gethostbyaddr(hostID)
+                    print("hostname is: ")
+                    print(hostname)
                     # Fill in end
                 except herror:  # if the host does not provide a hostname
                     # Fill in start
