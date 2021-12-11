@@ -160,12 +160,7 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     # Fill in start
                     preRtt = (timeReceived - startedSelect)
-                    print("pre rtt = ", preRtt)
-                    midyRtt = {preRtt:.2}
-                    print(midyRtt)
-                    midRtt = str(round(preRtt, 2))
-                    print("mid rtt = ", midRtt)
-                    rtt = str(midRtt) + "ms"
+                    rtt = str(preRtt) + "ms"
                     print("rtt = ", rtt)
                     tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname[0])])
                     print("about to print tracelist1")
