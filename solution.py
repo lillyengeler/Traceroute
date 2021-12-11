@@ -159,10 +159,13 @@ def get_route(hostname):
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     # Fill in start
-                    preRtt = round(1000 * (timeReceived-timeSent), 2)
-                    print("rtt = ", preRtt)
-                    rtt = str(preRtt) + "ms"
-                    tracelist1.extend([str(ttl), str(rtt), str(addr[0]), str(hostname[0])])
+                    preRtt = 1000 * (timeReceived-timeSent)
+                    print("pre rtt = ", preRtt)
+                    midRtt = str(round(preRtt, 2))
+                    print("mid rtt = ", midRtt)
+                    rtt = str(midRtt) + "ms"
+                    print("rtt = ", rtt)
+                    tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname[0])])
                     print("about to print tracelist1")
                     print(tracelist1)
                     print("done printing tracelist1")
