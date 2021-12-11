@@ -159,9 +159,9 @@ def get_route(hostname):
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     # Fill in start
-                    preRtt = 1000 * (timeReceived - startedSelect)
+                    preRtt = (timeReceived - startedSelect)
                     print("pre rtt = ", preRtt)
-                    midRtt = str(round(preRtt, 4))
+                    midRtt = str(round(preRtt, 2))
                     print("mid rtt = ", midRtt)
                     rtt = str(midRtt) + "ms"
                     print("rtt = ", rtt)
