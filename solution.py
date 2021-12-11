@@ -76,7 +76,6 @@ def build_packet():
 
 
 def get_route(hostname):
-    print("in get_route")
 
     timeLeft = TIMEOUT
     tracelist2 = []  # This is your list to contain all traces
@@ -84,7 +83,6 @@ def get_route(hostname):
     for ttl in range(1, MAX_HOPS):
         for tries in range(TRIES):
             tracelist1 = []  # This is your list to use when iterating through each trace
-            print("we're in the nested for loop")
             destAddr = gethostbyname(hostname)
 
             # Fill in start
@@ -96,10 +94,10 @@ def get_route(hostname):
             mySocket.setsockopt(IPPROTO_IP, IP_TTL, struct.pack('I', ttl))
             mySocket.settimeout(TIMEOUT)
             try:
-
                 d = build_packet()
                 mySocket.sendto(d, (destAddr, 0))
                 print("just sent socket to dest: ", destAddr)
+                print("ttl is: ", ttl)
                 t = time.time()
                 startedSelect = time.time()
                 whatReady = select.select([mySocket], [], [], timeLeft)
@@ -161,15 +159,10 @@ def get_route(hostname):
                     # Fill in start
                     preRtt = (timeReceived - startedSelect)
                     rtt = str(preRtt) + "ms"
-                    print("rtt = ", rtt)
                     tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname)])
-                    print("about to print tracelist1")
                     print(tracelist1)
-                    print("done printing tracelist1")
-                    print("gonna print tracelist2")
                     tracelist2.append(tracelist1)
                     print(tracelist2)
-                    print("done printing list 2")
                     # You should add your responses to your lists here
 
                     # Fill in end
@@ -184,9 +177,7 @@ def get_route(hostname):
                     # You should add your responses to your lists here
                     preRtt = (timeReceived - startedSelect)
                     rtt = str(preRtt) + "ms"
-                    print("rtt = ", rtt)
                     tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname)])
-                    print("gonna print tracelist2")
                     tracelist2.append(tracelist1)
                     print(tracelist2)
 
@@ -201,15 +192,10 @@ def get_route(hostname):
                     # You should add your responses to your lists here and return your list if your destination IP is met
                     preRtt = (timeReceived - startedSelect)
                     rtt = str(preRtt) + "ms"
-                    print("rtt = ", rtt)
                     tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname)])
-                    print("about to print tracelist1")
                     print(tracelist1)
-                    print("done printing tracelist1")
-                    print("gonna print tracelist2")
                     tracelist2.append(tracelist1)
                     print(tracelist2)
-                    print("done printing list 2")
                     if addr[0] == destAddr:
                         return tracelist2
 
@@ -225,7 +211,6 @@ def get_route(hostname):
                 print("returning tracelist 2")
 
                 tracelist1.clear()   # IS THIS NEEDED?
-                ttl += 1
                 return tracelist2
 
             finally:
