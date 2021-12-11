@@ -10,7 +10,7 @@ import binascii
 ICMP_ECHO_REQUEST = 8
 MAX_HOPS = 30
 TIMEOUT = 2.0
-TRIES = 1
+TRIES = 3
 
 
 # The packet that we shall send to each router along the path is the ICMP echo
@@ -98,8 +98,6 @@ def get_route(hostname):
             try:
 
                 d = build_packet()
-
-
                 mySocket.sendto(d, (destAddr, 0))
                 print("just sent socket to dest: ", destAddr)
                 t = time.time()
