@@ -182,9 +182,17 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     # Fill in start
                     # You should add your responses to your lists here
-                    rtt = (timeReceived - timeSent)
-                    tracelist1.extend([ttl, rtt, addr[0], hostname])
+                    preRtt = (timeReceived - startedSelect)
+                    rtt = str(preRtt) + "ms"
+                    print("rtt = ", rtt)
+                    tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname[0])])
+                    print("about to print tracelist1")
+                    print(tracelist1)
+                    print("done printing tracelist1")
+                    print("gonna print tracelist2")
                     tracelist2.append(tracelist1)
+                    print(tracelist2)
+                    print("done printing list 2")
 
                     # Fill in end
                 elif types == 0:
@@ -194,9 +202,17 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     # Fill in start
                     # You should add your responses to your lists here and return your list if your destination IP is met
-                    rtt = (timeReceived - timeSent)
-                    tracelist1.extend([ttl, rtt, addr[0], hostname])
+                    preRtt = (timeReceived - startedSelect)
+                    rtt = str(preRtt) + "ms"
+                    print("rtt = ", rtt)
+                    tracelist1.extend([str(ttl), rtt, str(addr[0]), str(hostname[0])])
+                    print("about to print tracelist1")
+                    print(tracelist1)
+                    print("done printing tracelist1")
+                    print("gonna print tracelist2")
                     tracelist2.append(tracelist1)
+                    print(tracelist2)
+                    print("done printing list 2")
                     if (addr[0] == destAddr):
                         return tracelist2
 
