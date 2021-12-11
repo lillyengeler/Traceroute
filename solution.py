@@ -79,11 +79,11 @@ def get_route(hostname):
     print("in get_route")
 
     timeLeft = TIMEOUT
-    tracelist1 = []  # This is your list to use when iterating through each trace
     tracelist2 = []  # This is your list to contain all traces
 
     for ttl in range(1, MAX_HOPS):
         for tries in range(TRIES):
+            tracelist1 = []  # This is your list to use when iterating through each trace
             print("we're in the nested for loop")
             destAddr = gethostbyname(hostname)
 
@@ -224,11 +224,11 @@ def get_route(hostname):
                     # Fill in end
                 print("returning tracelist 2")
 
-                tracelist1.clear()
-                return tracelist2
+                tracelist1.clear()   # IS THIS NEEDED?
+    return tracelist2
 
-            finally:
-                print("in socket close")
-                mySocket.close()
+#finally:
+    #print("in socket close")
+    mySocket.close()
 
 #get_route("google.com")
