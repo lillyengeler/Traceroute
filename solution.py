@@ -51,9 +51,11 @@ def build_packet():
     # Make the header in a similar way to the ping exercise.
     myID = os.getpid() & 0xFFFF  # Return the current process id
     myChecksum = 0
+    print("about to struct.pack")
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, myID, 1)
-    data = struct.pack("bbHHh", time.time())
     print("just made the header")
+    data = struct.pack("bbHHh", time.time())
+    print("just added the data")
     # Append checksum to the header.
     myChecksum = checksum(header + data)
     if sys.platform == 'darwin':
