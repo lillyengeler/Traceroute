@@ -214,6 +214,7 @@ def get_route(hostname):
                 return tracelist2
 
             finally:
+                print("ttl: ", ttl)
                 print("in socket close")
                 mySocket.close()
 
