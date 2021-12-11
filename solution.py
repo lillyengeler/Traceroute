@@ -111,7 +111,7 @@ def get_route(hostname):
                     # Fill in start
                     # You should add the list above to your all traces list
                     tracelist2.append(tracelist1)
-                    tracelist1.clear()  # clear out list for next packet
+                    #tracelist1.clear()  # clear out list for next packet
                     # Fill in end
                 recvPacket, addr = mySocket.recvfrom(1024)
                 print("rec packet addy: ", addr[0])
@@ -123,7 +123,7 @@ def get_route(hostname):
                     # Fill in start
                     # You should add the list above to your all traces list
                     tracelist2.append(tracelist1)
-                    tracelist1.clear()  # clear out list for next packet
+                    #tracelist1.clear()  # clear out list for next packet
                     # Fill in end
             except timeout:
                 continue
