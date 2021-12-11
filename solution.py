@@ -140,7 +140,7 @@ def get_route(hostname):
                     # Fill in start
                     # converting host ID from header to hostname
                     print("fetching hostname")
-                    hostname = socket.gethostbyaddr(hostID)
+                    hostname = gethostbyaddr(hostID)
                     print("hostname is: ")
                     print(hostname)
                     # Fill in end
