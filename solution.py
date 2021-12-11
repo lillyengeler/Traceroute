@@ -161,7 +161,7 @@ def get_route(hostname):
                     # Fill in start
                     rtt = (timeReceived-timeSent)
                     print("rtt = ", rtt)
-                    tracelist1.extend([ttl, " ", rtt, " ms ", addr[0], " ", hostname])
+                    tracelist1.extend([ttl, rtt, "ms", addr[0], hostname])
                     print("about to print tracelist1")
                     print(*tracelist1)
                     print("done printing tracelist1")
