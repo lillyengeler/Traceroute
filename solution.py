@@ -139,8 +139,8 @@ def get_route(hostname):
                 try:  # try to fetch the hostname
                     # Fill in start
                     # converting host ID from header to hostname
-                    print("host id: ")
-                    print(hostID)
+                    print("types, code, checksum, hostID, seq: ")
+                    print(types, ", ", code, ", ", checksum, ", ", hostID, ", ", sequence)
                     print("fetching hostname")
                     hostname = gethostbyaddr(hostID)
                     print("hostname is: ")
