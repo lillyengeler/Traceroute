@@ -105,7 +105,7 @@ def get_route(hostname):
                 whatReady = select.select([mySocket], [], [], timeLeft)
                 howLongInSelect = (time.time() - startedSelect)
                 if whatReady[0] == []:  # Timeout
-                    tracelist1.append(str(ttl), "*", "* * * Request timed out.")
+                    tracelist1.extend([str(ttl), "*", "* * * Request timed out."])
                     #tracelist1.append("*")
                     #tracelist1.append("* * * Request timed out.")
                     # Fill in start
@@ -118,7 +118,7 @@ def get_route(hostname):
                 timeReceived = time.time()
                 timeLeft = timeLeft - howLongInSelect
                 if timeLeft <= 0:
-                    tracelist1.append(str(ttl), "*", "* * * Request timed out.")
+                    tracelist1.extend([str(ttl), "*", "* * * Request timed out."])
                     #tracelist1.append("* * * Request timed out.")
                     # Fill in start
                     # You should add the list above to your all traces list
@@ -149,8 +149,6 @@ def get_route(hostname):
                     # Fill in end
 
                 if type == 11:
-                    print("in type 11 if statement")
-                    print("ttl: ", ttl)
                     # type 11 = TTL field is 0 - router sends warning msg to source containing name of router and IP address
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
